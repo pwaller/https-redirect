@@ -10,3 +10,11 @@ $ chmod +x ./https-redirect
 $ setcap 'cap_net_bind_service=+ep' ./https-redirect
 ```
 
+# Instant run with docker
+
+See [dit4c's](https://github.com/dit4c/dockerfile-https-redirect) very small [docker image](https://hub.docker.com/r/dit4c/https-redirect/).
+
+```
+docker run -d --name https-redirect -p 80:3000 dit4c/https-redirect
+```
+
