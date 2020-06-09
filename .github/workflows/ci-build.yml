@@ -1,0 +1,28 @@
+name: CI
+on:
+  push:
+    branches:
+      master
+  pull_request:
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build
+        run: |
+          make build
+
+      - name: Change compiled binary capabilities
+        run: |
+          sudo setcap 'cap_net_bind_service=+ep' ./https-redirect
+
+      - name: Run and test redirect
+        run: |
+          ./https-redirect &
+          curl -v localhost:80 2>&1 | grep "307 Temporary Redirect"
